@@ -143,6 +143,11 @@ class SearchScreen extends StatelessWidget {
                   },
                   icon: const Icon(Icons.search)),
             ),
+            onFieldSubmitted: (txt) {
+              context.read<MediaViewModel>().fetchSearch(controller.text);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (ccc) => const ResultScreen()));
+            },
             onChanged: (c) {
               // context.read<MediaViewModel>().fetchSearch(controller.text);
               print(c);
