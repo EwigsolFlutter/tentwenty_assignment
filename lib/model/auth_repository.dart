@@ -42,7 +42,7 @@ class APIRepository extends BaseService {
       );
       //
       log(response.body, name: "LOGIN DATA");
-      if (!response.body.contains('field is required')) {
+      if (response.body.contains('"status":200')) {
         isLogin = true;
       }
     } catch (e) {
