@@ -23,7 +23,7 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pots"),
+        title: const Text("Posts"),
         actions: [
           IconButton(
             onPressed: () async {
