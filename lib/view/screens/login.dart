@@ -10,9 +10,10 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider<AuthViewModel>(
       create: (create) => AuthViewModel(),
-      child: const LoginScreen(),
+      child: const LoginWidget(),
+      ,
     );
   }
 }

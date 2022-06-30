@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tentwenty_assignment/model/auth_repository.dart';
 import 'package:tentwenty_assignment/utils/gaps.dart';
 import 'package:tentwenty_assignment/view/screens/home_screen.dart';
@@ -20,6 +21,7 @@ class AuthViewModel with ChangeNotifier {
   Future<void> login(context) async {
     isLoading = true;
     notifyListeners();
+
     //send request for login
     final _apiResponse = await APIRepository().login(
       email.text,
@@ -28,6 +30,8 @@ class AuthViewModel with ChangeNotifier {
     );
 
     if (_apiResponse) {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString("email", email.text);
       showToast(context, "Login SuccessFully ");
       Navigator.pushAndRemoveUntil(
         context,

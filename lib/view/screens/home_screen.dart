@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider<PostViewModel>(
       create: (create) => PostViewModel(),
       child: const HomeWidget(),
     );
