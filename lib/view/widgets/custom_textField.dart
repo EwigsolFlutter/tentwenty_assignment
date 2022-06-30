@@ -20,14 +20,17 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(15.0),
       child: Selector<AuthViewModel, bool>(
           selector: (p0, p1) => p1.isViewPass,
           builder: (context, isTrue, _) {
             return TextFormField(
+              controller: controller,
               readOnly: isPassword ? isTrue : false,
               validator: _validator,
               decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
                 enabled: true,
                 hintText: label,
                 suffixIcon: isPassword
@@ -37,7 +40,7 @@ class CustomTextField extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   gapPadding: 5.0,
                   borderSide: const BorderSide(
-                    color: Colors.black26,
+                    color: Colors.black12,
                   ),
                 ),
               ),

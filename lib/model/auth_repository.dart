@@ -1,11 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:tentwenty_assignment/model/posts_model.dart';
 import 'package:tentwenty_assignment/model/services/base_service.dart';
-
-import 'apis/app_exception.dart';
 
 class APIRepository extends BaseService {
   @override
@@ -13,9 +11,12 @@ class APIRepository extends BaseService {
     List<Posts> lst = [];
     try {
       final response = await http.get(Uri.parse(BaseService.postsAPI));
-      lst = response.body as List<Posts>;
-    } on SocketException {
-      throw FetchDataException('No Internet Connection');
+      print(response.body);
+      lst = (jsonDecode(response.body) as List)
+          .map((e) => Posts.fromJson(e))
+          .toList();
+    } catch (e) {
+      log(e.toString());
     }
     return lst;
   }
@@ -29,8 +30,10 @@ class APIRepository extends BaseService {
       var mapBodyData = {
         "email": email,
         "password": password,
-        "deviceToken": deviceToken,
+        "device_token": deviceToken,
       };
+
+      print(mapBodyData);
 
       //calling API
       final response = await http.post(
@@ -38,10 +41,12 @@ class APIRepository extends BaseService {
         body: mapBodyData,
       );
       //
-      log(response.body, name: "LOGIN");
-      isLogin = true;
-    } on SocketException {
-      throw FetchDataException('No Internet Connection');
+      log(response.body, name: "LOGIN DATA");
+      if (!response.body.contains('field is required')) {
+        isLogin = true;
+      }
+    } catch (e) {
+      log(e.toString());
     }
     return isLogin;
   }

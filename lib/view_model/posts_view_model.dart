@@ -6,6 +6,10 @@ class PostViewModel with ChangeNotifier {
   List<Posts> postsList = [];
   bool isLoading = true;
 
+  PostViewModel() {
+    getPots();
+  }
+
   Future<void> getPots() async {
     //fetch all posts
     postsList = await APIRepository().getPosts();

@@ -19,8 +19,12 @@ class AuthViewModel with ChangeNotifier {
   }
 
   Future<void> login(context) async {
-    isLoading = true;
-    notifyListeners();
+    // isLoading = true;
+    // notifyListeners();
+
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
 
     //send request for login
     final _apiResponse = await APIRepository().login(

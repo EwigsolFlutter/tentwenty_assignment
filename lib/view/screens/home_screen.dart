@@ -21,7 +21,6 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.read<PostViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pots"),
@@ -41,29 +40,32 @@ class HomeWidget extends StatelessWidget {
           )
         ],
       ),
-      body: _body(model),
+      body: _body(),
     );
   }
 
-  _body(PostViewModel model) {
-    return model.isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : model.postsList.isEmpty
-            ? const Center(
-                child: Text("Empty "),
-              )
-            : ListView.builder(
-                itemCount: model.postsList.length,
-                itemBuilder: (context, index) {
-                  final item = model.postsList.elementAt(index);
-                  return ListTile(
-                    leading: Text(item.id.toString()),
-                    title: Text(item.title.toString()),
-                    subtitle: Text(item.body.toString()),
-                  );
-                },
-              );
+  _body() {
+    return Consumer<PostViewModel>(builder: (context, model, _) {
+      return model.isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : model.postsList.isEmpty
+              ? const Center(
+                  child: Text("Empty "),
+                )
+              : ListView.separated(
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: model.postsList.length,
+                  itemBuilder: (context, index) {
+                    final item = model.postsList.elementAt(index);
+                    return ListTile(
+                      leading: Text(item.id.toString()),
+                      title: Text(item.title.toString()),
+                      subtitle: Text(item.body.toString()),
+                    );
+                  },
+                );
+    });
   }
 }
